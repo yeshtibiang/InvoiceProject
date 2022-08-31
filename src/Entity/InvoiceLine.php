@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\InvoiceLineRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: InvoiceLineRepository::class)]
 class InvoiceLine
@@ -15,18 +16,39 @@ class InvoiceLine
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 10,
+        minMessage: 'The description must be at least {{ limit }} characters long'
+    )]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'The value {{ value }} is not a valid {{ type }}'
+    )]
     private ?int $quantity = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
+    #[Assert\Type(
+        type: 'double',
+        message: 'The value {{ value }} is not a valid {{ type }}'
+    )]
     private ?string $amount = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
+    #[Assert\Type(
+        type: 'double',
+        message: 'The value {{ value }} is not a valid {{ type }}'
+    )]
     private ?string $vatAmount = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
+    #[Assert\Type(
+        type: 'double',
+        message: 'The value {{ value }} is not a valid {{ type }}'
+    )]
     private ?string $totalVat = null;
 
     #[ORM\ManyToOne(inversedBy: 'invoiceLines')]
@@ -108,4 +130,5 @@ class InvoiceLine
 
         return $this;
     }
+
 }

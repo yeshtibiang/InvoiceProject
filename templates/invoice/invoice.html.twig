@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello InvoiceController!{% endblock %}
+{% form_theme form _self %}
+{% block body %}
+    {% include('./incs/header.html.twig') %}
+
+    <div class="container mt-3">
+        <h3>Create an Invoice</h3>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <input type="submit" value="create" class="btn btn-primary mt-3">
+
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+
+    <script>
+        $('#add-invoiceline').click(function() {
+            // const index = $('#invoice_invoiceLines div.form-group').length;
+            const index = +$('#widgets-counter').val();
+            const tmpl = $('#invoice_invoiceLines').data('prototype').replace(/__name__/g, index);
+            $('#invoice_invoiceLines').append(tmpl);
+
+            $('#widgets-counter').val(index + 1);
+
+            handleDeleteButton();
+        })
+
+        function handleDeleteButton() {
+            $('button[data-action="delete"]').click(function() {
+                const target = $(this).data('target');
+                $(target).remove();
+            });
+        }
+
+        handleDeleteButton();
+    </script>
+
+{% endblock %}
+
+
+{% block _invoice_invoiceLines_widget %}
+    <div>
+        <hr>
+        {{ form_widget(form) }}
+        <input type="hidden" id="widgets-counter" value="0">
+        <div class="form-group">
+            <button type="button" id="add-invoiceline" class="btn btn-secondary">Add an invoice line</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _invoice_invoiceLines_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _invoice_invoiceLines_entry_widget %}
+    <div class="form-group" id="block_{{ id }}">
+        <div class="row" >
+            <div class="">
+                {{ form_errors(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="">
+                {{ form_errors(form.quantity) }}
+                {{ form_widget(form.quantity) }}
+            </div>
+            <div class="">
+                {{ form_errors(form.amount) }}
+                {{ form_widget(form.amount) }}
+            </div>
+            <div class="">
+                {{ form_errors(form.vatAmount) }}
+                {{ form_widget(form.vatAmount) }}
+            </div>
+            <div class="">
+                {{ form_errors(form.totalVat) }}
+                {{ form_widget(form.totalVat) }}
+            </div>
+            <div class="">
+                <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger mt-3 mb-3">X</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+
+

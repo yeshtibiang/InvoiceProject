@@ -134,6 +134,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-invoker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-timer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/webpack-encore-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mercuryseries/flashy-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

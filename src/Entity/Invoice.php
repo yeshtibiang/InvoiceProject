@@ -36,6 +36,7 @@ class Invoice
     private ?int $invoiceNumber = null;
 
     #[ORM\OneToMany(mappedBy: 'invoiceId', targetEntity: InvoiceLine::class, cascade: ['persist'])]
+    #[Assert\Valid]
     private Collection $invoiceLines;
 
     public function __construct()

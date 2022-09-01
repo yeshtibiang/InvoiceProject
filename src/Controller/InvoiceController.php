@@ -35,6 +35,12 @@ class InvoiceController extends AbstractController
 
     }
 
+    private function calculateTotalAmount($vat, $amount, $quantity): float
+    {
+        $totalAmount = $amount * $quantity;
+        return $totalAmount + ($totalAmount * $vat / 100);
+    }
+
     #[Route('/invoice', name: 'app_invoice')]
     public function createInvoice(Request $request): Response
     {
@@ -45,6 +51,15 @@ class InvoiceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $invoice->setInvoiceNumber($this->generateInvoiceNumber());
+            // get all invoiceslines
+            $invoiceLines = [];
+            foreach ($form->get("invoiceLines")->getData() as $invoiceLine) {
+                $totalAmountwithVat = $this->calculateTotalAmount($invoiceLine->getVatAmount(), $invoiceLine->getAmount(), $invoiceLine->getQuantity());
+                $invoiceLine->setTotalVat($totalAmountwithVat);
+                $invoice->addInvoiceLine($invoiceLine);
+            }
+//            $invoice->addInvoiceLine($invoiceLines);
+
             $invoice->setInvoiceDate(new \DateTime());
             $this->em->persist($invoice);
             $this->em->flush();

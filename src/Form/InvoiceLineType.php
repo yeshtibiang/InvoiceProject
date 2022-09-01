@@ -43,13 +43,13 @@ class InvoiceLineType extends AbstractType
                     'class' => 'form-control mt-2',
                 ],
             ])
-            ->add('totalVat', NumberType::class, [
-                'label' => 'Total VAT',
-                'attr' => [
-                    'placeholder' => 'Total VAT',
-                    'class' => 'form-control mt-2',
-                ],
-            ])
+//            ->add('totalVat', NumberType::class, [
+//                'label' => 'Total VAT',
+//                'attr' => [
+//                    'placeholder' => 'Total VAT',
+//                    'class' => 'form-control mt-2',
+//                ],
+//            ])
         ;
     }
 

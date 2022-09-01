@@ -32,21 +32,26 @@ class InvoiceLine
 
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
     #[Assert\Type(
-        type: 'double',
+        type: 'numeric',
         message: 'The value {{ value }} is not a valid {{ type }}'
     )]
     private ?string $amount = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
     #[Assert\Type(
-        type: 'double',
+        type: 'numeric',
         message: 'The value {{ value }} is not a valid {{ type }}'
+    )]
+    #[Assert\Range(
+        notInRangeMessage: 'The VAT amount must be between {{ min }} and {{ max }}',
+        min: 0,
+        max: 100.00
     )]
     private ?string $vatAmount = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
     #[Assert\Type(
-        type: 'double',
+        type: 'numeric',
         message: 'The value {{ value }} is not a valid {{ type }}'
     )]
     private ?string $totalVat = null;
